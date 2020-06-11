@@ -1,0 +1,73 @@
+<%= render 'layouts/nav'%>
+<div id="emp_search_messages">
+</div>
+<input type="search" id="search_val_emp"/>
+<button id="employee_search">Search</button><br/>
+
+SearchResults can be seen below
+<table id="employees_information" border="2">
+  <thead>
+    <th>EmpId</th>
+    <th>Name</th>
+    <th>Description</th>
+    <th>Age</th>
+    <th>Salary</th>
+  </thead>
+  <tbody id="employees">
+  </tbody>
+</table>
+
+
+<script>
+  $('#employee_search').click(function(e){
+    let search_value = $('#search_val_emp').val();
+    let unileverAuthToken = localStorage.getItem('uniliver_x_auth');
+    $.ajax({
+      type: "GET",
+      url: '/search_employee/employees',
+      dataType: 'json',
+      data: {
+        search_key: search_value  
+      },
+      headers: { 'x_auth': unileverAuthToken },
+      success: function(result){
+        $('#employees').html('')
+        $('#emp_search_messages').html('')
+        if(result['msg'] == 'Successful'){
+          alert(result['msg']+'Found Employee')
+          result['employees'].forEach((employee_information)=>{
+            let employee_html = employeeInfoExtractor(employee_information)
+            $('#employees').append(employee_html)
+          })
+        }
+      },
+      error: function(response, status, xhr) {        
+        if(response.status == 401){
+          alert(response.statusText)
+        }
+        if(response.status == 404){
+          alert("Not found such record")
+        }
+      }
+    })
+
+    function employeeInfoExtractor(employeeInformation){
+        let trElement = document.createElement('tr');
+        var employeeName = employeeInformation['name'];
+        var employeeAge = employeeInformation['age']
+        var employeeDescription = employeeInformation['description']
+        var employeeSalary = employeeInformation['salary']
+        var employeeIdentity = employeeInformation['emp_id']
+        var iterableProperties = [employeeName, employeeAge, employeeDescription, employeeSalary, employeeIdentity];
+        iterableProperties.forEach((employee_attribute)=>{
+           let tdElement = document.createElement('td')
+           tdElement.innerText = employee_attribute
+           trElement.append(tdElement) 
+        })
+        return trElement
+    }
+
+  
+  })
+
+</script>

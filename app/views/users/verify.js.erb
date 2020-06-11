@@ -1,0 +1,9 @@
+<%if @authenticated[:msg] == "unsuccessful"%>
+  <%@authenticated[:errors].each do |err_msg|%>
+    $('#login_errors').append('<%= err_msg %>')
+  <%end%>
+<%else%>
+  localStorage.setItem('uniliver_x_auth', "<%=@authenticated[:x_auth]%>")
+  alert('<%= @authenticated[:msg]%> authentication')
+  document.location.href = "/users/success_login"
+<%end%>

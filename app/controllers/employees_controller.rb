@@ -52,7 +52,6 @@ class EmployeesController < ApplicationController
 
   def find_employee
     @employee = Employee.find(params[:id])
-    return @employee if @employee
     rescue ActiveRecord::RecordNotFound
       render json: {msg: "Unsuccesful", status: 404}
   end

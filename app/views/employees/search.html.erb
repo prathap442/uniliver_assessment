@@ -40,6 +40,9 @@ SearchResults can be seen below
             $('#employees').append(employee_html)
           })
         }
+        else{
+          alert("Not found such record")
+        }
       },
       error: function(response, status, xhr) {        
         if(response.status == 401){

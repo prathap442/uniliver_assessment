@@ -8,10 +8,8 @@ class EmployeesController < ApplicationController
   end
 
   def search_employee
-    binding.pry
     search_key = params['search_key']
     @employees = Employee.where('lower(name) LIKE ? OR lower(description) LIKE ? OR emp_id LIKE ? OR CAST(salary AS VARCHAR(9)) LIKE ? OR CAST(age AS VARCHAR(9)) LIKE ?',search_key,search_key, search_key, search_key, search_key)
-    binding.pry
     respond_to do |format|
       format.json{ render :search}
     end

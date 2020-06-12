@@ -4,4 +4,5 @@ class Employee < ApplicationRecord
   validates :salary, :presence => {:message => ERROR_NOTIFIER['salary_blank']}
   validates :age, :presence => {:message => ERROR_NOTIFIER['age']}
   validates_numericality_of :age,:salary
+  validates :emp_id, :uniqueness => {:message => ERROR_NOTIFIER['employee_id_repeated']}
 end

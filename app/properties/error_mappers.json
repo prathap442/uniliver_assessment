@@ -6,5 +6,6 @@
    "password_blank": "The password cant be blank",
    "login_id_blank": "The login id cant be blank",
    "wrong_password": "Password cant go wrong!!!",
-   "login_id_exists": "The given login id exists already"
+   "login_id_exists": "The given login id exists already",
+   "employee_id_repeated": "The employee id cannot be repeated it should be unique"
 }
